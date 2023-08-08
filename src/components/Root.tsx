@@ -1,16 +1,16 @@
 import {Outlet} from "react-router-dom";
 import {
     Box,
-    Button,
+    Button, Divider,
     HStack,
     IconButton, Input, InputGroup, InputLeftElement,
     Modal, ModalBody, ModalCloseButton,
     ModalContent, ModalFooter,
     ModalHeader,
-    ModalOverlay,
+    ModalOverlay, Text,
     useDisclosure, VStack
 } from "@chakra-ui/react";
-import {FaAirbnb, FaEnvelope, FaLock, FaMoon} from "react-icons/fa";
+import {FaAirbnb, FaComment, FaEnvelope, FaGithub, FaLock, FaMoon} from "react-icons/fa";
 
 export default function Root() {
     const {isOpen, onClose, onOpen} = useDisclosure();
@@ -38,16 +38,22 @@ export default function Root() {
                                 <Input variant={"filled"} placeholder={"email"}></Input>
                             </InputGroup>
                             <InputGroup>
-                                <InputLeftElement children={ <Box color={"gray.500"}>
+                                <InputLeftElement children={<Box color={"gray.500"}>
                                     <FaLock/>
-                                </Box> }/>
+                                </Box>}/>
                                 <Input variant={"filled"} placeholder={"password"}></Input>
                             </InputGroup>
 
                         </VStack>
                         <Button mt={"4"} colorScheme={"red"} w={"100%"}>Log in</Button>
+                        <HStack my={"8"}>
+                            <Divider>
+                                <Text textTransform={"uppercase"} color="gray.500" fontSize={"xs"} as={"b"}>Or</Text>
+                            </Divider>
+                        </HStack>
+                        <Button w={"100%"} leftIcon={<FaGithub/>}colorScheme={"telegram"} >Continue with Github</Button>
+                        <Button w={"100%"} leftIcon={<FaComment/>} colorScheme={"yellow"}>Continue with Kakao</Button>
                     </ModalBody>
-
 
 
                 </ModalContent>
