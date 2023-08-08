@@ -61,6 +61,8 @@ export default function Home() {
 
       {data?.map((room) => (
         <Room
+          key={room.id}
+          id={room.id}
           imageUrl={room.photos[0].file}
           title={room.title}
           rating={room.rating}
