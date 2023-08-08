@@ -5,6 +5,7 @@ import RoomSkeleton from "../components/RoomSkeleton";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getRooms } from "../api";
+import { Link } from "react-router-dom";
 
 interface IPhotos {
   id: number;
@@ -57,6 +58,7 @@ export default function Home() {
           <RoomSkeleton />
         </>
       ) : null}
+
       {data?.map((room) => (
         <Room
           imageUrl={room.photos[0].file}
