@@ -1,18 +1,58 @@
 import {Outlet} from "react-router-dom";
-import {Box, Button, HStack} from "@chakra-ui/react";
-import {FaAirbnb} from "react-icons/fa";
+import {
+    Box,
+    Button,
+    HStack,
+    IconButton, Input, InputGroup, InputLeftElement,
+    Modal, ModalBody, ModalCloseButton,
+    ModalContent, ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    useDisclosure, VStack
+} from "@chakra-ui/react";
+import {FaAirbnb, FaEnvelope, FaLock, FaMoon} from "react-icons/fa";
 
 export default function Root() {
+    const {isOpen, onClose, onOpen} = useDisclosure();
     return <Box>
         <HStack justifyContent={"space-between"} py={"5"} px={"10 "}>
             <Box color={"red.500"}>
-                <FaAirbnb size={"38"}/>
+                <FaAirbnb size={"48"}/>
             </Box>
             <HStack spacing={"2"}>
-                <Button>Log In</Button>
+                <IconButton variant={"ghost"} aria-label={"Toggle dark mode"} icon={<FaMoon/>}/>
+                <Button onClick={onOpen}>Log In</Button>
                 <Button colorScheme={"red"}>Sign Up</Button>
             </HStack>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay/>
+                <ModalContent>
+                    <ModalHeader>Log in</ModalHeader>
+                    <ModalCloseButton/>
+                    <ModalBody>
+                        <VStack>
+                            <InputGroup>
+                                <InputLeftElement children={<Box color={"gray.500"}>
+                                    <FaEnvelope/>
+                                </Box>}/>
+                                <Input variant={"filled"} placeholder={"email"}></Input>
+                            </InputGroup>
+                            <InputGroup>
+                                <InputLeftElement children={ <Box color={"gray.500"}>
+                                    <FaLock/>
+                                </Box> }/>
+                                <Input variant={"filled"} placeholder={"password"}></Input>
+                            </InputGroup>
+
+                        </VStack>
+                        <Button mt={"4"} colorScheme={"red"} w={"100%"}>Log in</Button>
+                    </ModalBody>
+
+
+
+                </ModalContent>
+            </Modal>
         </HStack>
-            <Outlet/>
-        </Box>;
+        <Outlet/>
+    </Box>;
 }
