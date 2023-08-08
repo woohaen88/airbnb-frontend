@@ -7,8 +7,6 @@ import {
   useColorMode,
   LightMode,
   useColorModeValue,
-  VStack,
-  Divider,
   Stack,
 } from "@chakra-ui/react";
 import { FaAirbnb, FaMoon, FaSun } from "react-icons/fa";

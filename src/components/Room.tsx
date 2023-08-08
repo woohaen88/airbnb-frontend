@@ -11,15 +11,28 @@ import {
 
 import { FaRegHeart, FaStar } from "react-icons/fa";
 
-export default function Room() {
+interface IRoomProps {
+  imageUrl: string;
+  title: string;
+  rating: number;
+  city: string;
+  country: string;
+  price: number;
+}
+
+export default function Room({
+  imageUrl,
+  title,
+  rating,
+  city,
+  country,
+  price,
+}: IRoomProps) {
   const gray = useColorModeValue("gray.600", "gray.300");
   return (
     <VStack alignItems={"flex-start"}>
       <Box position={"relative"} rounded={"3xl"} mb={3} overflow={"hidden"}>
-        <Image
-          minH={"280"}
-          src="https://a0.muscache.com/im/pictures/prohost-api/Hosting-574843000111312410/original/acdd719e-d7c1-4a4d-8852-fbe1dc49f6b5.jpeg?im_w=1200"
-        />
+        <Image minH={"280"} src={imageUrl} />
         <Button
           variant={"unstyled"}
           cursor={"pointer"}
@@ -34,7 +47,7 @@ export default function Room() {
       <Box>
         <Grid gap={2} templateColumns={"6fr 1fr"}>
           <Text as={"b"} noOfLines={1} fontSize={"md"}>
-            Dolsan-eup, Yeosu-si, 전라남도, 한국
+            {title}
           </Text>
           <HStack
             _hover={{
@@ -44,15 +57,15 @@ export default function Room() {
             spacing={1}
           >
             <FaStar size={"15"} />
-            <Text>5.0</Text>
+            <Text>{rating}</Text>
           </HStack>
         </Grid>
         <Text fontSize={"sm"} color={gray}>
-          Seoul, S. Korea
+          {city}, {country}
         </Text>
       </Box>
       <Text fontSize={"sm"} color={gray}>
-        <Text as={"b"}>$72</Text> / night
+        <Text as={"b"}>${price}</Text> / night
       </Text>
     </VStack>
   );
