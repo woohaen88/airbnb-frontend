@@ -14,6 +14,7 @@ import {
   MenuItem,
   MenuButton,
   useToast,
+  ToastId,
 } from "@chakra-ui/react";
 import { FaAirbnb, FaMoon, FaSun } from "react-icons/fa";
 import LoginModal from "./LoginModal";
@@ -21,29 +22,37 @@ import { Link } from "react-router-dom";
 import SignUpModal from "./SignUpModal";
 import useUser from "../lib/useUser";
 import { logOut } from "../api";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRef } from "react";
 
 export default function Header() {
   const { userLoading, user, isLoggedIn } = useUser();
 
   const toast = useToast();
   const queryClient = useQueryClient();
+  const toastId = useRef<ToastId>();
+  const mutation = useMutation(logOut, {
+    onMutate: () => {
+      toastId.current = toast({
+        title: "로그아웃 중이에영~~",
+        description: "다음에 또 봐여!",
+        status: "loading",
+        position: "bottom-right",
+      });
+    },
+    onSuccess: () => {
+      if (toastId.current) {
+        queryClient.refetchQueries(["me"]);
+        toast.update(toastId.current, {
+          status: "success",
+          title: "로그아웃 성공!",
+          description: "see you later!",
+        });
+      }
+    },
+  });
   const onLogOut = async () => {
-    const toastId = toast({
-      title: "로그아웃 중이에영~~",
-      description: "다음에 또 봐여!",
-      status: "loading",
-      position: "bottom-right",
-    });
-
-    const response = await logOut();
-    queryClient.refetchQueries(["me"]);
-
-    toast.update(toastId, {
-      status: "success",
-      title: "로그아웃 성공!",
-      description: "see you later!",
-    });
+    mutation.mutate();
   };
   const {
     isOpen: isLoginOpen,

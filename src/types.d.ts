@@ -63,3 +63,8 @@ export interface IUser {
   language: string;
   currency: string;
 }
+
+interface IForm {
+  email: string;
+  password: string;
+}

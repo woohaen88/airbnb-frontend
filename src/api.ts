@@ -1,6 +1,7 @@
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import axios from "axios";
+import { IForm } from "./types";
 
 const instance = axios.create({
   baseURL: "http://localhost:8000/api/v1/",
@@ -42,4 +43,12 @@ export const githubLogIn = (code:string) => {
             "X-CSRFToken": Cookie.get("csrftoken") || "",
         }
     }).then((response) => response.status)
+}
+
+export const emailLogin = ({email, password}: IForm) => {
+  return instance.post("users/login/", {email, password}, {
+    headers: {
+      "X-CSRFToken": Cookie.get("csrftoken") || "",
+    }
+  }).then((response) => response.data)
 }
